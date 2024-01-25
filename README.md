@@ -29,11 +29,12 @@ A documentação fornece informações sobre todas as rotas disponíveis, parâm
 
 ## Tecnologias Utilizadas
 
-- React
-- Node.js
-- PostgreSQL
-- Bootstrap
-- Express
+- Bootstrap v5.3
+- Express v4.18.2
+- Node.js v20.10.0
+- PostgreSQL v16.1
+- React v18.2.0
+- Yarn v1.22.21
 
 ## Requisitos
 
