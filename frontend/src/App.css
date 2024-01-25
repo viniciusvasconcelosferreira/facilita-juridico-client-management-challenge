@@ -1,23 +1,48 @@
 .list {
-  text-align: left;
-  max-width: 750px;
-  margin: auto;
+    text-align: left;
+    max-width: 750px;
+    margin: auto;
 }
 
 .submit-form {
-  max-width: 300px;
-  margin: auto;
+    max-width: 300px;
+    margin: auto;
 }
 
 .edit-form {
-  max-width: 300px;
-  margin: auto;
+    max-width: 300px;
+    margin: auto;
 }
 
 .error-message {
-  display: block;
-  width: 100%;
-  margin-top: 0.25rem;
-  font-size: 0.875em;
-  color: var(--bs-form-invalid-color);
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: var(--bs-form-invalid-color);
+}
+
+.modal-backdrop {
+    --bs-backdrop-zindex: 1050;
+    --bs-backdrop-bg: #000;
+    --bs-backdrop-opacity: 0.5;
+    background-color: var(--bs-backdrop-bg);
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: var(--bs-backdrop-zindex);
+}
+
+.modal-backdrop.fade {
+    opacity: 0
+}
+
+.modal-backdrop.show {
+    opacity: var(--bs-backdrop-opacity);
+}
+
+.fade {
+    transition: opacity .15s linear;
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ClientService from '../services/client.service';
 import { addDateMask } from '../services/utils';
+import CustomModal from './clients-modal.component';
 
 export default class ClientsList extends Component {
   constructor(props) {
@@ -12,12 +13,16 @@ export default class ClientsList extends Component {
     this.setActiveClient = this.setActiveClient.bind(this);
     this.removeAllClients = this.removeAllClients.bind(this);
     this.searchClient = this.searchClient.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
 
     this.state = {
       clients: [],
       currentClient: null,
       currentIndex: -1,
       searchClient: '',
+      isModalOpen: false,
+      list: [],
     };
   }
 
@@ -89,8 +94,35 @@ export default class ClientsList extends Component {
       });
   }
 
+  openModal() {
+    this.getShortRoute();
+    this.setState({
+      isModalOpen: true,
+    });
+  };
+
+  closeModal() {
+    this.setState({
+      isModalOpen: false,
+    });
+  };
+
+  getShortRoute() {
+    ClientService.getShortestRoute()
+      .then(response => {
+        console.log(response.data);
+        this.setState({
+          list: response.data.data,
+        });
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }
+
+
   render() {
-    const { searchClient, clients, currentClient, currentIndex } = this.state;
+    const { searchClient, clients, currentClient, currentIndex, isModalOpen, list } = this.state;
 
     return (
       <div className="list row">
@@ -115,7 +147,41 @@ export default class ClientsList extends Component {
           </div>
         </div>
         <div className="col-md-6">
-          <h4>Clients List</h4>
+          <div className="hstack gap-3">
+            <div>
+              <h4>Clients List</h4>
+            </div>
+            <div>
+              <button className="btn btn-outline-primary btn-sm" onClick={this.openModal}>Calculate visiting route
+              </button>
+              <CustomModal
+                isOpen={isModalOpen}
+                onRequestClose={this.closeModal}
+                contentLabel="Service Itinerary"
+              >
+                <table className="table table-striped">
+                  <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>X Coordinate</th>
+                    <th>Y Coordinate</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  {list.map(item => (
+                    <tr key={item.id}>
+                      <td>{item.id}</td>
+                      <td>{item.name}</td>
+                      <td>{item.x_coordinate}</td>
+                      <td>{item.y_coordinate}</td>
+                    </tr>
+                  ))}
+                  </tbody>
+                </table>
+              </CustomModal>
+            </div>
+          </div>
 
           <ul className="list-group">
             {clients &&

@@ -30,6 +30,10 @@ class ClientService {
   search(string) {
     return http.get(`${CLIENTS_API}/search?q=${string}`);
   }
+
+  getShortestRoute(){
+    return http.get(`${CLIENTS_API}/short-route`);
+  }
 }
 
 // eslint-disable-next-line
