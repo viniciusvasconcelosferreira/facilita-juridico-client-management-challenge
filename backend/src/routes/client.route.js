@@ -9,6 +9,9 @@ router.get('/clients', clientController.getAllClients);
 // Obter um cliente pelo nome, email ou telefone
 router.get('/clients/search', clientController.searchClients);
 
+// Obter a rota mais curta entre os clientes
+router.get('/clients/short-route', clientController.getShortestRoute);
+
 // Obter um cliente por ID
 router.get('/clients/:id', clientController.getClientById);
 

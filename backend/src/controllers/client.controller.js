@@ -1,4 +1,5 @@
 const { pool } = require('../../config/db.config');
+const geolib = require('geolib');
 
 // Função para obter todos os clientes
 const getAllClients = async (req, res) => {
@@ -153,6 +154,31 @@ const deleteAllClients = async (req, res) => {
   }
 };
 
+const getShortestRoute = async (req, res) => {
+  try {
+    const result = await pool.query('SELECT id, name, x_coordinate, y_coordinate FROM client');
+    const clients = result.rows;
+
+    // Ordena os clientes com base na distância a partir do ponto (0,0)
+    const sortedClients = clients.sort((a, b) => {
+      const distanceA = geolib.getDistance({ latitude: 0, longitude: 0 }, {
+        latitude: a.x_coordinate,
+        longitude: a.y_coordinate,
+      });
+      const distanceB = geolib.getDistance({ latitude: 0, longitude: 0 }, {
+        latitude: b.x_coordinate,
+        longitude: b.y_coordinate,
+      });
+      return distanceA - distanceB;
+    });
+
+    res.status(200).json({ data: sortedClients });
+  } catch (error) {
+    console.error('Erro ao obter clientes:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+};
+
 module.exports = {
   getAllClients,
   getClientById,
@@ -161,4 +187,5 @@ module.exports = {
   deleteClient,
   searchClients,
   deleteAllClients,
+  getShortestRoute,
 };
