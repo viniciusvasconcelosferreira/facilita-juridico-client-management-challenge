@@ -4,9 +4,9 @@ const port = process.env.PORT || 3000;
 
 // Exibir as URLs disponíveis
 if (process.env.NODE_ENV === 'development') {
-    console.log(expressListEndpoints(app));
+  console.log(expressListEndpoints(app));
 }
 
 app.listen(port, function() {
-    console.log(`Servidor rodando na porta ${port}`);
+  console.log(`Servidor rodando na porta ${port}`);
 });

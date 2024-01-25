@@ -47,12 +47,12 @@ const getClientById = async (req, res) => {
 
 // Função para adicionar um novo cliente
 const addClient = async (req, res) => {
-  const { name, email, telephone } = req.body;
+  const { name, email, telephone, x_coordinate, y_coordinate } = req.body;
 
   try {
     const result = await pool.query(
-      'INSERT INTO client (name, email, telephone) VALUES ($1, $2, $3) RETURNING *',
-      [name, email, telephone],
+      'INSERT INTO client (name, email, telephone,x_coordinate,y_coordinate) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [name, email, telephone, x_coordinate, y_coordinate],
     );
     res.status(201).json({ message: 'Cliente adicionado com sucesso.', data: result.rows[0] });
   } catch (error) {
@@ -64,7 +64,7 @@ const addClient = async (req, res) => {
 // Função para atualizar um cliente
 const updateClient = async (req, res) => {
   const clientId = req.params.id;
-  const { name, email, telephone } = req.body;
+  const { name, email, telephone, x_coordinate, y_coordinate } = req.body;
 
   const updateFields = [];
   const params = [];
@@ -85,6 +85,18 @@ const updateClient = async (req, res) => {
   if (telephone !== undefined) {
     updateFields.push(`telephone = $${index}`);
     params.push(telephone);
+    index++;
+  }
+
+  if (x_coordinate !== undefined) {
+    updateFields.push(`x_coordinate = $${index}`);
+    params.push(x_coordinate);
+    index++;
+  }
+
+  if (y_coordinate !== undefined) {
+    updateFields.push(`y_coordinate = $${index}`);
+    params.push(y_coordinate);
     index++;
   }
 

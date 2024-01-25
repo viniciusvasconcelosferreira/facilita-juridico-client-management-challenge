@@ -7,6 +7,9 @@ class Client extends Component {
     super(props);
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
+    this.onChangeTelephone = this.onChangeTelephone.bind(this);
+    this.onChangeXCoordinate = this.onChangeXCoordinate.bind(this);
+    this.onChangeYCoordinate = this.onChangeYCoordinate.bind(this);
     this.getClient = this.getClient.bind(this);
     this.updateClient = this.updateClient.bind(this);
     this.deleteClient = this.deleteClient.bind(this);
@@ -17,6 +20,8 @@ class Client extends Component {
         name: '',
         email: '',
         telephone: '',
+        x_coordinate: 0,
+        y_coordinate: 0,
       },
       message: '',
     };
@@ -61,6 +66,28 @@ class Client extends Component {
     }));
   }
 
+  onChangeXCoordinate(e) {
+    const x_coordinate = e.target.value;
+
+    this.setState(prevState => ({
+      currentClient: {
+        ...prevState.currentClient,
+        x_coordinate: x_coordinate,
+      },
+    }));
+  }
+
+  onChangeYCoordinate(e) {
+    const y_coordinate = e.target.value;
+
+    this.setState(prevState => ({
+      currentClient: {
+        ...prevState.currentClient,
+        y_coordinate: y_coordinate,
+      },
+    }));
+  }
+
   getClient(id) {
     ClientService.get(id)
       .then(response => {
@@ -71,6 +98,8 @@ class Client extends Component {
             name: data.name,
             email: data.email,
             telephone: data.telephone,
+            x_coordinate: data.x_coordinate,
+            y_coordinate: data.y_coordinate,
           },
         });
         console.log(response.data);
@@ -144,6 +173,30 @@ class Client extends Component {
                   id="telephone"
                   value={currentClient.telephone}
                   onChange={this.onChangeTelephone}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="y_coordinate">Latitude (Y)</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="y_coordinate"
+                  value={currentClient.y_coordinate}
+                  onChange={this.onChangeYCoordinate}
+                  min={-90}
+                  max={90}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="x_coordinate">Longitude (X)</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  id="x_coordinate"
+                  value={currentClient.x_coordinate}
+                  onChange={this.onChangeXCoordinate}
+                  min={-180}
+                  max={180}
                 />
               </div>
             </form>

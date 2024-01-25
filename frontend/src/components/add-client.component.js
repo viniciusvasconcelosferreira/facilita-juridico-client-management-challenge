@@ -7,6 +7,8 @@ export default class AddClient extends Component {
     this.onChangeName = this.onChangeName.bind(this);
     this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangeTelephone = this.onChangeTelephone.bind(this);
+    this.onChangeXCoordinate = this.onChangeXCoordinate.bind(this);
+    this.onChangeYCoordinate = this.onChangeYCoordinate.bind(this);
     this.saveClient = this.saveClient.bind(this);
     this.newClient = this.newClient.bind(this);
 
@@ -14,6 +16,8 @@ export default class AddClient extends Component {
       name: '',
       email: '',
       telephone: '',
+      x_coordinate: 0,
+      y_coordinate: 0,
       submitted: false,
       errors: [],
     };
@@ -37,11 +41,25 @@ export default class AddClient extends Component {
     });
   }
 
+  onChangeXCoordinate(e) {
+    this.setState(({
+      x_coordinate: e.target.value,
+    }));
+  }
+
+  onChangeYCoordinate(e) {
+    this.setState(({
+      y_coordinate: e.target.value,
+    }));
+  }
+
   saveClient() {
     const data = {
       name: this.state.name,
       email: this.state.email,
       telephone: this.state.telephone,
+      x_coordinate: this.state.x_coordinate,
+      y_coordinate: this.state.y_coordinate,
     };
 
     ClientService.create(data)
@@ -51,6 +69,8 @@ export default class AddClient extends Component {
           name: response.data.name,
           email: response.data.email,
           telephone: response.data.telephone,
+          x_coordinate: response.data.x_coordinate,
+          y_coordinate: response.data.y_coordinate,
           submitted: true,
         });
         console.log(response.data);
@@ -67,6 +87,8 @@ export default class AddClient extends Component {
       name: '',
       email: '',
       telephone: '',
+      x_coordinate: 0,
+      y_coordinate: 0,
       submitted: false,
       errors: [],
     });
@@ -125,6 +147,39 @@ export default class AddClient extends Component {
               />
               {this.state.errors.telephone && <div className="error-message">{this.state.errors.telephone[0]}</div>}
             </div>
+
+            <div className="form-group">
+              <label htmlFor="y_coordinate">Latitude (Y)</label>
+              <input
+                type="number"
+                className="form-control"
+                id="y_coordinate"
+                required
+                value={this.state.y_coordinate}
+                onChange={this.onChangeYCoordinate}
+                name="y_coordinate"
+                min={-90}
+                max={90}
+              />
+              {this.state.errors.y_coordinate && <div className="error-message">{this.state.errors.y_coordinate[0]}</div>}
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="x_coordinate">Longitude (X)</label>
+              <input
+                type="number"
+                className="form-control"
+                id="x_coordinate"
+                required
+                value={this.state.x_coordinate}
+                onChange={this.onChangeXCoordinate}
+                name="x_coordinate"
+                min={-180}
+                max={180}
+              />
+              {this.state.errors.x_coordinate && <div className="error-message">{this.state.errors.x_coordinate[0]}</div>}
+            </div>
+
 
             <button onClick={this.saveClient} className="btn btn-success">
               Submit

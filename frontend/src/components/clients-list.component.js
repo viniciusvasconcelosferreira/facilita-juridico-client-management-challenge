@@ -164,6 +164,18 @@ export default class ClientsList extends Component {
               </div>
               <div>
                 <label>
+                  <strong>X coordinate:</strong>
+                </label>{' '}
+                {currentClient.x_coordinate}
+              </div>
+              <div>
+                <label>
+                  <strong>Y coordinate:</strong>
+                </label>{' '}
+                {currentClient.y_coordinate}
+              </div>
+              <div>
+                <label>
                   <strong>Created at:</strong>
                 </label>{' '}
                 {addDateMask(currentClient.created_at)}
