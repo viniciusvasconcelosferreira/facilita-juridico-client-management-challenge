@@ -1,7 +1,11 @@
 {
-  "name": "my-app",
+  "name": "facilita-juridico-client-management-challenge",
   "version": "0.1.0",
+  "description": "Client Management System for the technical challenge of Facilita Jurídica, using Node.js, Express, React, and PostgreSQL.",
   "private": true,
+  "repository": "https://github.com/viniciusvasconcelosferreira/facilita-juridico-client-management-challenge",
+  "author": "Vinicius Vasconcelos Ferreira",
+  "license": "MIT",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
